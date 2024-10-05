@@ -4,7 +4,8 @@
   "description": "Projeto de estudos sobre como Mockar serviços adequadamente em Node",
   "main": "index.js",
   "scripts": {
-    "serve": "serve -p 5050 static"
+    "static": "serve -p 5050 static",
+    "server": "node server.mjs --watch"
   },
   "author": "Roosevelt Villela",
   "license": "MIT",
