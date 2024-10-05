@@ -4,7 +4,7 @@
   "description": "Projeto de estudos sobre como Mockar serviços adequadamente em Node",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "serve -p 5050 static"
   },
   "author": "Roosevelt Villela",
   "license": "MIT",
