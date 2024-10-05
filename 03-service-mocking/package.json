@@ -1,0 +1,14 @@
+{
+  "name": "03-service-mocking",
+  "version": "1.0.0",
+  "description": "Projeto de estudos sobre como Mockar serviços adequadamente em Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Roosevelt Villela",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.3"
+  }
+}
