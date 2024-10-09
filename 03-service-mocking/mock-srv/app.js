@@ -3,6 +3,7 @@ import AutoLoad from "@fastify/autoload";
 import { fileURLToPath } from "url";
 
 import cors from "@fastify/cors";
+import websocket from "@fastify/websocket";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,7 +13,12 @@ export const options = {};
 
 export default async function (fastify, opts) {
   // Place here your custom code!
+
+  // Register CORS
   fastify.register(cors);
+
+  // Register WebSocket
+  fastify.register(websocket, {});
 
   // Do not touch the following lines
 
