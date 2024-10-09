@@ -56,6 +56,9 @@ export default fp(async function (fastify, opts) {
     const idPrefix = catToPrefix[category];
     const id = calculateID(idPrefix, data);
     data.push({ id, ...request.body });
+
+    orders[id] = { total: 0 };
+
     return data;
   });
 });
