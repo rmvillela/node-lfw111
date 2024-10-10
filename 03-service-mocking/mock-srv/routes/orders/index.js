@@ -1,15 +1,41 @@
 "use strict";
 
 export default async function (fastify, opts) {
-  fastify.get("/:category", { websocket: true }, async (socket, request) => {
-    for (const order of fastify.currentOrders(request.params.category)) {
+  function monitorMessages(socket) {
+    socket.on("message", (data) => {
+      try {
+        const { cmd, payload } = JSON.parse(data);
+
+        if (cmd === "update-category") {
+          sendCurrentOrders(payload.category, socket);
+        }
+      } catch (error) {
+        fastify.log.warn(
+          "WebSocket Message (data: %o) Error: %s",
+          data,
+          err.message
+        );
+      }
+    });
+  }
+
+  function sendCurrentOrders(category, socket) {
+    for (const order of fastify.currentOrders(category)) {
       socket.send(order);
     }
+  }
 
-    for await (const order of fastify.realtimeOrders()) {
-      if (socket.readyState >= socket.CLOSING) break;
+  fastify.get(
+    "/:category",
+    { websocket: true },
+    async ({ socket }, request) => {
+      monitorMessages(socket);
+      sendCurrentOrders(request.params.category, socket);
 
-      socket.send(order);
+      for await (const order of fastify.realtimeOrders()) {
+        if (socket.readyState >= socket.CLOSING) break;
+        socket.send(order);
+      }
     }
-  });
+  );
 }
