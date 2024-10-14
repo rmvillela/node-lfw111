@@ -25,20 +25,20 @@ export default async function (fastify, opts) {
     }
   }
 
-  fastify.get(
-    "/:category",
-    { websocket: true },
-    async ({ socket }, request) => {
-      monitorMessages(socket);
-      sendCurrentOrders(request.params.category, socket);
+  fastify.get("/:category", { websocket: true }, async (socket, request) => {
+    monitorMessages(socket);
+    sendCurrentOrders(request.params.category, socket);
 
-      for await (const order of fastify.realtimeOrders()) {
-        if (socket.readyState >= socket.CLOSING) break;
-        socket.send(order);
-      }
+    for await (const order of fastify.realtimeOrders()) {
+      if (socket.readyState >= socket.CLOSING) break;
+      socket.send(order);
     }
-  );
+  });
 
+  /**
+   * CURL Example
+   * curl -X POST -H "Content-Type: application/json" -d '{"amount": 10}' http://localhost:3000/orders/A1
+   */
   fastify.post("/:id", async (request) => {
     const { id } = request.params;
 
