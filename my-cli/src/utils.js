@@ -31,7 +31,7 @@ export async function update(id, amount) {
 
     log(`Order ${id} updated with amount ${amount}`);
   } catch (error) {
-    error(err.message);
+    error(error.message);
     process.exit(1);
   }
 }
@@ -59,7 +59,7 @@ export async function add(...args) {
 
     log(`Item "${id}: ${name}" has been added to the ${category} category`);
   } catch (error) {
-    error(err.message);
+    error(error.message);
     process.exit(1);
   }
 }
